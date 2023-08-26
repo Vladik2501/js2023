@@ -59,7 +59,7 @@
 // 5. ***** Реалізуйте гру "Камінь, ножиці, папір" проти комп'ютера.
 //           Використовуйте оператор if else та  switch для обробки можливих варіантів.
 
-let playerChoise = prompt('для гри "Камінь, ножиці, папір",введіть один варіант з трьох можливих ')
+let playerChoise = prompt('for play "stone,snippers,paper" choose one of the options:stone,snippers,paper    ')
 let computerChoise = parseInt(Math.random()*100)
 console.log(computerChoise)
 
@@ -72,17 +72,21 @@ if (computerChoise >= 0 && computerChoise <= 30){
 }
 
 if ((playerChoise === 'paper' && computerChoise === 'stone')){
-    console.log('гравець переміг,папір бє камінь')
+    console.log('player win,because paper > stone')
 }else if(playerChoise === 'stone' && computerChoise === 'snippers'){
-    console.log('гравець переміг,камінь бє ножниці')
+    console.log('player win,because stone > snippers')
 }else if (playerChoise === 'snippers' && computerChoise === 'paper'){
-    console.log('гравець переміг,ножниці бють папір')
+    console.log('player win,because snippers > paper')
 }else if (computerChoise === 'paper' && playerChoise === 'stone'){
-    console.log('компютер переміг,папір бє камінь')
+    console.log('computer win,because paper > stone')
 }else if(computerChoise === 'stone' && playerChoise === 'snippers'){
-    console.log('компютер переміг,камінь бє ножниці')
+    console.log('computer win,because stone > snippers')
 }else if (computerChoise === 'snippers' && playerChoise === 'paper'){
-    console.log('компютер переміг,ножниці бють папір')
-}else {
+    console.log('computer win,because snippers > paper')
+}else if (playerChoise === 'paper' && computerChoise === 'paper'){
+    console.log('draw')
+}else if (playerChoise === 'stone' && computerChoise === 'stone') {
+    console.log('draw')
+} else {
     console.log('error')
 }

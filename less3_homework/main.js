@@ -52,12 +52,12 @@ while (b <= 20) {
 //
 // -----------------------------------------------
 let listOfItems = ['html', 'css', 'javascript', 'mysql', 'mongodb', 'react', 'angular', 'node.js'];
-for (let item of listOfItems) {
-    document.write(`<ul>
-        <li>${item}</li>
-    </ul>`)
+document.write(`<ul>`)
 
+for (let item of listOfItems) {
+    document.write(`<li>${item}</li>`)
 }
+document.write(`</ul>`)
 
 
 //6 Використовуючи данні з масиву, за допомоги document.write та циклу
