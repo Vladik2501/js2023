@@ -166,12 +166,12 @@
 function exchange(sumUAH, currencyValues, exchangeCurrency) {
 
     for (const item of currencyValues) {
-     if(exchangeCurrency===item.currency) return sumUAH/item.value;
+        if (exchangeCurrency === item.currency) return sumUAH / item.value;
     }
 
 }
 
-let arr = [{currency: 'EUR',value: 42},{currency:'USD',value:40}]
-let res = exchange(10000,arr , 'EUR')
+let arr = [{currency: 'EUR', value: 42}, {currency: 'USD', value: 40}]
+let res = exchange(10000, arr, 'EUR')
 
 console.log(res)
