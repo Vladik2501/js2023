@@ -1,30 +1,31 @@
 // // 1 - створити функцію яка обчислює та повертає площу прямокутника зі сторонами а і б
 // function rectangleCalc(a, b) {
 //     let rectangleS = a * b
-//     console.log(rectangleS)
 //     return rectangleS
 // }
 //
-// rectangleCalc(4, 6)
-//
+// let firstRes = rectangleCalc(4, 6)
+// console.log(firstRes)
+
 // //2 - створити функцію яка обчислює та повертає площу кола з радіусом r
 // function circleCalc(r) {
 //     let circleS = 3.14 * (r * r)
-//     console.log(circleS)
 //     return circleS
 // }
 //
-// circleCalc(4)
+//let secondRes = circleCalc(4)
+//concole.log(secindRec)
 //
 // //3 - створити функцію яка обчислює та повертає площу циліндру висотою h, та радіутом r
 // function cylinderCalc(h, r) {
 //     let cylinderS = 2 * 3.14 * r * h + 2 * 3.14 * (r * r)
-//     console.log(cylinderS)
 //     return cylinderS
 // }
 //
-// cylinderCalc(3, 6)
+// let thirdRes = cylinderCalc(3, 6)
 //
+// console.log(thirdRes)
+
 // //4 - створити функцію яка приймає масив та виводить кожен його елемент
 //
 // function arrReceiver(arr) {
