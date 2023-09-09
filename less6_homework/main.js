@@ -21,7 +21,7 @@ console.log(obj3.toLowerCase())
 
 //4 - Є "брудна" стрінга. Почистити її від зайвих пробілів.
 let string = ' dirty string   '
-console.log(string.substring(1, 13))
+console.log(string.split(' ').filter(Boolean).join(' '))
 
 //5 - Напишіть функцію stringToarray(str), яка перетворює рядок на масив слів.
 // let arr = stringToarray(str); ['Ревуть', 'воли', 'як', 'ясла', 'повні']
@@ -85,7 +85,7 @@ console.log(filter)
 //  -- за допомоги map перетворити кожен елемент на наступний тип {id,title,monthDuration}
 let updatedArr = coursesAndDurationArray.map((programmingLanguage) => {
     return {
-        id: 'id', ...programmingLanguage,
+        id: 'id',
         title: programmingLanguage.title,
         monthDuration: programmingLanguage.monthDuration
     }
@@ -109,25 +109,23 @@ console.log(updatedArr)
 
 let suits = ['spade', 'diamond', 'heart', 'clubs'];
 let values = ['6', '7', '8', '9', '10', 'ace', 'jack', 'queen', 'king', 'joker'];
-let colors = ['red', 'black'];
+function createCard(value, suit) {
+    let color;
 
-let deck = [];
-for (let i = 0; i < suits.length; i++) {
-    for (let j = 0; j < values.length; j++) {
-        for (let k = 0; k < colors.length; k++) {
-            let cardColor = (suits[i] === 'spade' || suits[i] === 'clubs') ? 'black' : 'red';
-
-            let card = {
-                suit: suits[i],
-                value: values[j],
-                color: cardColor
-            }
-            deck.push(card)
-
-        }
+    if (suit === 'Hearts' || suit === 'Diamonds') {
+        color = 'Red';
+    } else {
+        color = 'Black';
     }
+
+    return { suit, value, color };
 }
-console.log(deck)
+
+let deck = suits.flatMap(suit => values.map(value => createCard(value, suit)));
+
+console.log(deck);
+
+
 
 for (let i = 0; i < deck.length; i++) {
     if (deck[i].suit === 'spade' && deck[i].value === 'ace') {
@@ -253,15 +251,15 @@ let coursesArray = [
         modules: ['html', 'css', 'js', 'mysql', 'mongodb', 'react', 'angular', 'aws', 'docker', 'git', 'sass']
     }
 ];
-
-let filteredArray = coursesArray.filter(function(item) {
+//1
+let filteredArray = coursesArray.filter((item) => {
     return item.modules.includes('sass')
-});
+})
 
 console.log(filteredArray)
-
-let filteredArray2 = coursesArray.filter(function(item) {
+//2
+let filteredArray2 = coursesArray.filter((item) => {
     return item.modules.includes('docker')
-});
+})
 
 console.log(filteredArray2)
