@@ -75,7 +75,7 @@ console.log(divsWithInfo);
 // ==========================
 
 let container = document.createElement("div");
-container.className = "container"; // Можно добавить класс контейнера по желанию
+container.className = "container";
 
 for (let i = 0; i < coursesAndDurationArray.length; i++) {
     let course = coursesAndDurationArray[i];
