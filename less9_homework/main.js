@@ -252,42 +252,41 @@ let coursesArray = [
 //     hourDuration: 909,
 //     modules: ['html', 'css', 'js', 'mysql', 'mongodb', 'react', 'angular', 'aws', 'docker', 'git', 'node.js']
 // },
-let fatherDiv = document.createElement("div")
-fatherDiv.classList.add('father')
-let headDiv = document.createElement('div')
-headDiv.classList.add('head')
-let mainDiv = document.createElement("div")
-mainDiv.classList.add('main')
-let main1 = document.createElement("div")
-let main2 = document.createElement("div")
-main1.classList.add('main1')
-main2.classList.add('main2')
-let listDiv = document.createElement("div")
-listDiv.classList.add('listDiv')
-let list = document.createElement("ul")
-list.classList.add('list')
-fatherDiv.append(headDiv, mainDiv, listDiv)
-mainDiv.append(main1, main2)
-listDiv.append(list)
-document.body.appendChild(fatherDiv)
-        let course = coursesArray[1];
-
-        let titleDiv = document.createElement("h1");
-        titleDiv.innerText = course.title;
-
-        let monthDiv = document.createElement("h2");
-        monthDiv.innerText = course.monthDuration;
-
-        let hourDiv = document.createElement("h2");
-        hourDiv.innerText = course.hourDuration;
-
-        let listItem = document.createElement('li');
-        listItem.innerText = course.modules.join(', ');
-
-    headDiv.appendChild(titleDiv);
-    main1.appendChild(monthDiv);
-    main2.appendChild(hourDiv);
-    list.appendChild(listItem);
 
 
+let fatherDiv = document.createElement("div");
+fatherDiv.classList.add('father');
+document.body.appendChild(fatherDiv);
+
+for (let i = 0; i < coursesArray.length; i++) {
+    let course = coursesArray[i];
+
+    let courseDiv = document.createElement("div");
+    courseDiv.classList.add('course');
+
+    let titleDiv = document.createElement("h1");
+    titleDiv.innerText = course.title;
+
+    let monthDiv = document.createElement("h2");
+    monthDiv.innerText = `Month Duration: ${course.monthDuration}`;
+
+    let hourDiv = document.createElement("h2");
+    hourDiv.innerText = `Hour Duration: ${course.hourDuration}`;
+
+    let modulesDiv = document.createElement("ul");
+    modulesDiv.classList.add('modules');
+
+    for (let j = 0; j < course.modules.length; j++) {
+        let module = document.createElement("li");
+        module.innerText = course.modules[j];
+        modulesDiv.appendChild(module);
+    }
+
+    courseDiv.appendChild(titleDiv);
+    courseDiv.appendChild(monthDiv);
+    courseDiv.appendChild(hourDiv);
+    courseDiv.appendChild(modulesDiv);
+
+    fatherDiv.appendChild(courseDiv);
+}
 
