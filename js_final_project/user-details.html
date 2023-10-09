@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        button{
+            width: 360px;
+            margin:0 0 10px 20px;
+            background: #ffebcd ;
+            border: 2px solid black;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+     // На странице user-details.html:
+    // 4 Вивести всю, без виключення, інформацію про об'єкт user на який клікнули
+    // 5 Додати кнопку "post of current user", при кліку на яку, з'являються title всіх постів поточного юзера
+    // (для получения постов используйте эндпоинт https://jsonplaceholder.typicode.com/users/USER_ID/posts)
+    // 6 Каждому посту додати кнопку/посилання, при кліку на яку відбувається перехід на сторінку post-details.html, котра має детальну інфу про поточний пост.
+    //
+    // Стилизація проєкта -
+    // user-details.html - блок з інфою про user зверху сторінки. Кнопка нижчє, на 90% ширини сторінки, по центру.
+    // блоки з короткою іфною про post - в ряд по 5 .
+    let url = new URL(location.href);
+    let id = url.searchParams.get('id');
+
+    function renderObject(obj) {
+        let result = '<ul>';
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                result += '<li>';
+                if (typeof obj[key] === 'object') {
+                    result += `<strong>${key}:</strong>`;
+                    result += renderObject(obj[key]);
+                } else {
+                    result += `<strong>${key}:</strong> ${obj[key]}`;
+                }
+                result += '</li>';
+            }
+        }
+        result += '</ul>';
+        return result;
+    }
+
+    if (id) {
+        fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+            .then(response => response.json())
+            .then(user => {
+                let div = document.createElement('div');
+                div.style.border = '5px solid black';
+                div.style.width = '400px';
+                div.style.borderRadius = '10px';
+                div.style.background = '#ffddc3';
+                document.body.appendChild(div);
+
+                let renderedUser = renderObject(user);
+                div.innerHTML = renderedUser;
+
+                let btn = document.createElement('button');
+                let originalWidth, originalHeight,originalMargin;
+
+                btn.addEventListener('mouseenter', function () {
+                    originalWidth = btn.style.width;
+                    originalHeight = btn.style.height;
+                    originalMargin = btn.style.margin
+                    btn.style.width = '370px';
+                    btn.style.height = '25px';
+                    btn.style.margin = '0 0 6px 15px '
+                });
+
+                btn.addEventListener('mouseleave', function () {
+                    if (!originalWidth && !originalHeight && !originalMargin) {
+                        btn.style.width = originalWidth;
+                        btn.style.height = originalHeight;
+                        btn.style.margin = originalMargin
+                    }
+                });
+                btn.innerText = 'Post of current user';
+                btn.addEventListener('click', function () {
+                    fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
+                        .then(response => response.json())
+                        .then(posts => {
+                            let postsDiv = document.createElement('div');
+                            postsDiv.style.display = 'flex';
+                            postsDiv.style.flexWrap = 'wrap';
+                            postsDiv.style.width = '1000px'
+                            postsDiv.style.height = '400px'
+                            document.body.appendChild(postsDiv);
+
+                            for (let post of posts) {
+                                let postBlock = document.createElement('div');
+                                postBlock.style.border = '3px solid black';
+                                postBlock.style.width = '150px';
+                                postBlock.style.margin = '10px';
+                                postBlock.style.padding = '5px';
+                                postBlock.style.background = '#ffddc3';
+                                postBlock.style.borderRadius = '10px'
+                                let postTitle = document.createElement('h3');
+                                postTitle.innerText = post.title;
+                                let postLink = document.createElement('a');
+                                postLink.href = `post-details.html?id=${post.id}`;
+                                postLink.style.textDecorationColor = 'black';
+                                postLink.style.color = 'black';
+                                postLink.innerText = 'View Details';
+
+                                let originalColor;
+
+                                postLink.addEventListener("mouseenter", () => {
+                                    originalColor = postLink.style.color;
+                                    postLink.style.color = 'grey';
+                                });
+
+                                postLink.addEventListener("mouseleave", () => {
+                                    if (originalColor) {
+                                        postLink.style.color = originalColor;
+                                    }
+                                });
+
+                                postBlock.appendChild(postTitle);
+                                postBlock.appendChild(postLink);
+
+                                postsDiv.appendChild(postBlock);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Помилка запиту:', error);
+                        });
+                });
+
+                div.appendChild(btn);
+            })
+            .catch(error => {
+                console.error('Помилка запиту:', error);
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .comment-block{
+            border: 5px solid black;
+            margin: 10px;
+            width: 400px;
+            background: #ffddc3;
+            border-radius: 10px;
+        }
+        .comment-block p {
+            margin-left: 5px;
+        }
+        .comment-block h4 {
+            margin-left: 5px;
+        }
+        .comments-container{
+            display: flex;
+            width: 1250px;
+        }
+        .post-container{
+            border: 5px solid black;
+            margin: 10px;
+            width: 400px;
+            background: #ffddc3;
+            border-radius: 10px;
+        }
+        .post-container p {
+            margin-left: 5px;
+        }
+        .post-container h3 {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="post-container" class="post-container"></div>
+<div id="comments-container" class="comments-container"></div>
+
+<script>
+    // На странице post-details.html:
+    // 7 Вивести всю, без виключення, інформацію про об'єкт post на який клікнули .
+    // 8 Нижчє інформаці про пост, вивести всі коментарі поточного поста (ендпоінт  - https://jsonplaceholder.typicode.com/posts/POST_ID/comments)
+    //
+    // Стилизація проєкта -
+    // post-details.html - блок з інфою про пост зверху. Коментарі - по 4 в ряд.
+    // Всі елементи котрі характеризують users, posts, comments візуалізувати, так, щоб було видно що це блоки (дати фон. марджини і тд)
+
+
+    let url = new URL(location.href);
+    let postId = url.searchParams.get('id');
+
+    if (postId) {
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+            .then(response => response.json())
+            .then(post => {
+                let postContainer = document.getElementById('post-container');
+                let postDiv = document.createElement('div');
+                postDiv.classList.add('post-block');
+
+                let postTitle = document.createElement('h3');
+                postTitle.innerText = post.title;
+
+                let postBody = document.createElement('p');
+                postBody.innerText = post.body;
+
+                postDiv.appendChild(postTitle);
+                postDiv.appendChild(postBody);
+                postContainer.appendChild(postDiv);
+            })
+            .catch(error => {
+                console.error('Помилка запиту для поста:', error);
+            });
+
+        fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+            .then(response => response.json())
+            .then(comments => {
+                let commentsContainer = document.getElementById('comments-container');
+                let commentsDiv = document.createElement('div');
+                commentsDiv.classList.add('comments-container');
+
+                for (let comment of comments) {
+                    let commentBlock = document.createElement('div');
+                    commentBlock.classList.add('comment-block');
+
+                    let commentName = document.createElement('h4');
+                    commentName.innerText = comment.name;
+
+                    let commentEmail = document.createElement('p');
+                    commentEmail.innerText = comment.email;
+
+                    let commentBody = document.createElement('p');
+                    commentBody.innerText = comment.body;
+
+                    commentBlock.appendChild(commentName);
+                    commentBlock.appendChild(commentEmail);
+                    commentBlock.appendChild(commentBody);
+
+                    commentsDiv.appendChild(commentBlock);
+                }
+
+                commentsContainer.appendChild(commentsDiv);
+            })
+            .catch(error => {
+                console.error('Помилка запиту для коментарів:', error);
+            });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .father {
+        -moz-columns: 25px 2;
+        -webkit-columns: 25px 2;
+        columns: 25px 2;
+        width: 750px;
+    }
+
+    .div{
+        width: 200px;
+        border: 3px solid black;
+        margin: 0 10px 10px 10px;
+        border-radius: 10px;
+        background: #ffddc3;
+    }
+    .div p{
+        margin-left: 5px;
+        font-weight: bold;
+    }
+    .div button{
+        margin:0 0 10px 45px ;
+        border: 2px solid black;
+        border-radius: 8px;
+        background: blanchedalmond;
+    }
+
+</style>
+<body>
+<script>
+    //В index.html
+    // 1 отримати масив об'єктів з endpoint`а https://jsonplaceholder.typicode.com/users
+    // 2 Вивести id,name всіх user в index.html. Окремий блок для кожного user.
+    // 3 Додати кожному блоку кнопку/посилання , при кліку на яку відбувається перехід  на сторінку user-details.html, котра має детальну інфорацію про об'єкт на який клікнули
+    // Стилизація проєкта -
+    // index.html - всі блоки з user - по 2 в рядок. кнопки/аосилвння розташувати під інформацією про user.
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(value => value.json())
+        .then(users => {
+            let father = document.createElement("div")
+            father.classList.add('father')
+            document.body.appendChild(father)
+            for (let user of users) {
+                let id = user.id;
+                let name = user.name;
+                let div = document.createElement('div');
+                let p = document.createElement('p');
+                let btn = document.createElement('button')
+                p.innerText = id + ' - ' + name;
+                btn.innerText = 'tap to see'
+                btn.addEventListener('click', function () {
+                    window.location.href = 'user-details.html?id=' + id;
+                });
+                div.classList.add('div');
+
+                div.append(p, btn);
+                father.appendChild(div)
+                let originalWidth, originalHeight,originalMargin;
+
+                btn.addEventListener('mouseenter', function () {
+                    originalWidth = btn.style.width;
+                    originalHeight = btn.style.height;
+                    originalMargin = btn.style.margin
+                    btn.style.width = '80px';
+                    btn.style.height = '25px';
+                    btn.style.margin = '0 0 6px 42px '
+                });
+
+                btn.addEventListener('mouseleave', function () {
+                    if (!originalWidth && !originalHeight && !originalMargin) {
+                        btn.style.width = originalWidth;
+                        btn.style.height = originalHeight;
+                        btn.style.margin = originalMargin
+                    }
+                });
+
+
+            }
+
+        })
+
+        .catch(error => {
+            console.error('Помилка запиту:', error);
+        });
+</script>
+</body>
+</html>
